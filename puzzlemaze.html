@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<style>
+
+body {
+  color: #ff7;
+  background: #000;
+}
+
+</style>
+<body id="body">
+My version of the maze draw
+<button onclick="run();">Moo</botton>
+<br/>
+ <script src="2darr.js"></script>
+ <script src="display.js"></script>
+ <script src="puzzlesolve.js"></script>
+
+<script>
+
+function run() {
+canvas1 = document.getElementById('canvas');
+if (canvas1) {
+  canvas1.remove();
+}
+
+mazeSize = 2;
+setupMaze(mazeSize, mazeSize,400,400);   
+solve(mazeSize - 1,0,0, mazeSize - 1);
+showPath();
+};
+  //showPath(longestChain);
+</script>
