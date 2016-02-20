@@ -94,6 +94,7 @@ function tryMove() {
   tryTheseMoves = shuffle([MOVES.up, MOVES.down, MOVES.left, MOVES.right]);
   // try each of the passed moves.
   while (direction = tryTheseMoves.pop()) {
+    console.log("start direction " + direction.name);
     if (canMove(direction)) {
       x = oldX;
       y = oldY;
@@ -107,10 +108,11 @@ function tryMove() {
         won = tryMove();
         
         if (won) {
-        alert("I won");
           return true;
         }
       }
+      console.log("unmove: " + direction.name);
+
       printPath();
       unmove(direction);
       printPath();
