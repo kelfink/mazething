@@ -5,17 +5,30 @@
 
 body {
   color: #ff7;
-  background: #000;
+  background: #077;
 }
 
 </style>
+<title>Attempt to solve a maze of specified sizes</title>
 <body id="body">
-My version of the maze draw
-<button onclick="run();">Moo</botton>
+<p>
+In this puzzle type, a mouse wants to start at one corner of the 'maze' and visit all locations with the maze, moving up, down, left or right.
+The mouse want tot visit all locations in the grid, to get the treats from each one.  But she must not visit any cell more than once.
+For each size, is it possible?  Can you predict which sizes wil let her win, and which will not?  Can you come up with a rule to predict success?
+
+Try the program below to experiment.  
+</p>
 <br/>
  <script src="2darr.js"></script>
  <script src="display.js"></script>
  <script src="puzzlesolve.js"></script>
+
+Specify size of the maze
+width<input type="textedit" id="mwidth" value="3"/>
+<br/>
+height<input type="textedit" id="mheight" value="3"/>
+<br/>
+<button onclick="run();">Solve</botton>
 
 <script>
 
@@ -24,11 +37,13 @@ canvas1 = document.getElementById('canvas');
 if (canvas1) {
   canvas1.remove();
 }
+mx = document.getElementById('mwidth').value;
+my = document.getElementById('mheight').value;
 
-mazeSize = 2;
-setupMaze(mazeSize, mazeSize,400,400);   
-solve(mazeSize - 1,0,0, mazeSize - 1);
-showPath();
+
+setupMaze(mx, my,400,400);   
+solve(mx - 1,0,0, my - 1);
+showLongestPath();
 };
   //showPath(longestChain);
 </script>

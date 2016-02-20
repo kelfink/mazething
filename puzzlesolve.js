@@ -65,14 +65,33 @@ function solve(x, y, outX, outY) {
    solved = false;
 
    won = tryMove(8	);
-   console.log("did I win ? ", won);
+   console.log("did I win with " + cellsX + "," + cellsY + " dimensions? ", won);
    
    return won;
 }
 
+function shuffle(array) {
+  var currentIndex = array.length, temporaryValue, randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
 function tryMove() {
 
-  tryTheseMoves = [MOVES.up, MOVES.down, MOVES.left, MOVES.right];
+  tryTheseMoves = shuffle([MOVES.up, MOVES.down, MOVES.left, MOVES.right]);
   // try each of the passed moves.
   while (direction = tryTheseMoves.pop()) {
     if (canMove(direction)) {
@@ -86,17 +105,30 @@ function tryMove() {
       else if (movesMade.length < cellsX * cellsY) {
         // move forward and keep trying.
         won = tryMove();
+        
         if (won) {
+        alert("I won");
           return true;
         }
       }
-     
-      if (direction) unmove(direction);
+      printPath();
+      unmove(direction);
+      printPath();
     }
   }
   return false;
 }
 
+function printPath() {
+    loc = { x: startX, y: startY };
+    console.log("Start at " + loc);
+    movesMade.forEach(function(direction) {
+      newSpot = doMove(loc, direction);
+      loc = newSpot;
+      console.log("  move to " + loc.x + "," + loc.y);
+    });
+    console.log("End");
+}
 
 function showPath() {
     loc = { x: startX, y: startY };
@@ -105,8 +137,9 @@ function showPath() {
       newSpot = showMove(loc, direction);
       loc = newSpot
     });
-    square(loc.x, loc.y);
+    square(loc.x, loc.y, winner());
 }
+
 
 function showLongestPath() {
     loc = { x: startX, y: startY };
@@ -125,6 +158,10 @@ function canMove(direction) {
      y < cellsY && x < cellsX && !cells[x][y];
 }
 
+function doMove(loc, direction) {
+   return { "x" : loc.x + direction.x , "y" : loc.y + direction.y };
+}
+
 function showMove(loc, direction) {
    markBox(loc.x, loc.y, direction);
    return { "x" : loc.x + direction.x , "y" : loc.y + direction.y };
@@ -139,7 +176,6 @@ function move(direction) {
    oldX = x;
    oldY = y;
    if (movesMade.length > longestChain.length) {
-     console.log("extending longest chain to " + movesMade.length);
      // copy the array to remember the best chain so far. ... covers the most cells.
      longestChain = movesMade.slice(0);
    }

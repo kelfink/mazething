@@ -6,6 +6,8 @@ function line(oldX, oldY, x,y) {
 }
 
 function circle(x, y) {
+    context.fillStyle = "green";
+    context.strokeStyle = 'green';
     context.beginPath();
     context.arc((x + 0.5) * cellSize, (y + 0.5) * cellSize, cellSize / 5, 0, 2 * Math.PI, false);
     context.fill();
@@ -13,7 +15,12 @@ function circle(x, y) {
     context.stroke();
 }
 
-function square(x, y) {
+function square(x, y, winner) {
+
+   sColor = winner ? "green" : "red";
+
+    context.fillStyle = sColor;
+    context.strokeStyle = sColor;
    context.beginPath();
    context.moveTo( (x + 0.25) * cellSize, (y + 0.5) * cellSize);
    context.lineTo( (x + 0.75) * cellSize,    (y + 0.5) * cellSize);
